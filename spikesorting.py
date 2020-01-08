@@ -61,7 +61,18 @@ def NEO(x):
 
 
 class Waveformer(TransformerMixin):
-    '''Waveformer. Gets a raw trace and extracts waveforms'''
+    '''Waveformer.
+
+    Given a raw trace, it extracts waveforms following the common
+    pipeline consisting of filtering, emphasization, thresholding,
+    waveform extraction and alignment.
+
+    References
+    * Gibson, S., Judy, J. W., & Marković, D. (2011). Spike sorting: The
+    first step in decoding the brain: The first step in decoding the brain.
+    IEEE Signal Processing Magazine, 29(1), 124–143.
+    https://doi.org/10.1109/MSP.2011.941880
+    '''
 
     def __init__(self, filter_type='bandpass',
                  filter_freqs=[500, 4000], filter_order=5,
@@ -242,8 +253,12 @@ class Waveformer(TransformerMixin):
 
 
 class WaveformSorter(BaseEstimator, ClassifierMixin):
+    '''Waveform Sorter.
 
-    """Waveform Clusterer"""
+    Given a collection of waveforms features, it applies a clustering
+    algorithm (mixture of Gaussians) with an automatically selected
+    number of cluster to assign a label to each waveform.
+    '''
 
     def __init__(self, max_components=3, visualize=False, n_iter=10, random_state=None):
 
